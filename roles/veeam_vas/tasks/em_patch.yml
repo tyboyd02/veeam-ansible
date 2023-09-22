@@ -63,23 +63,20 @@
     product_id: "Veeam Backup Enterprise Manager Update"
     arguments: '/log "{{ destination }}logs\\{{ patch_file }}.log" /silent /noreboot'
 ##wait
-- name: Pause for 2 minutes
+- name: Pause for 5 minutes
   pause:
-    seconds: 120
-    msg: waiting 2min
-- name: Reboot the Windows machine
-  win_reboot:
-
+    seconds: 300
+    msg: waiting 5min
 ## POST-INSTALL TASKS
-##- name: Starting all Veeam services
-##  ansible.windows.win_shell: |
-##    Get-Service veeam* | Where-Object {$_.Name -ne "VeeamMBPDeploymentService"} | Start-Service
-##- name: Stopping all Veeam services
-## ansible.windows.win_shell: |
-##    Get-Service veeam* | Stop-Service
-##  when: not (patch | bool)
-##- name: Rebooting server now to complete EM patch installation
-##  ansible.windows.win_reboot:
-##    msg: Reboot initiated by Ansible to complete EM patch installation
-##  when:
-##    - not (patch | bool)
+- name: Starting all Veeam services
+  ansible.windows.win_shell: |
+    Get-Service veeam* | Where-Object {$_.Name -ne "VeeamMBPDeploymentService"} | Start-Service
+- name: Stopping all Veeam services
+  ansible.windows.win_shell: |
+    Get-Service veeam* | Stop-Service
+  when: not (patch | bool)
+- name: Rebooting server now to complete EM patch installation
+  ansible.windows.win_reboot:
+    msg: Reboot initiated by Ansible to complete EM patch installation
+  when:
+    - not (patch | bool)
