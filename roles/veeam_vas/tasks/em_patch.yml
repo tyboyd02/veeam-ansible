@@ -67,10 +67,8 @@
   pause:
     seconds: 120
     msg: waiting 2min
-##reboot
-- name: Rebooting server now to complete EM patch installation
-  ansible.windows.win_reboot:
-   msg: Reboot initiated by Ansible to complete EM patch installation
+- name: Reboot the Windows machine
+  win_reboot:
 
 ## POST-INSTALL TASKS
 ##- name: Starting all Veeam services
