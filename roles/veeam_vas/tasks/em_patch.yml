@@ -62,8 +62,11 @@
     path: "{{ source }}{{ patch_folder }}{{ patch_file }}"
     product_id: "Veeam Backup Enterprise Manager Update"
     arguments: '/log "{{ destination }}logs\\{{ patch_file }}.log" /silent /noreboot'
-  register: patch_results
-
+##wait
+- name: Pause for 5 minutes
+      pause:
+        seconds: 300
+        
 ## POST-INSTALL TASKS
 - name: Starting all Veeam services
   ansible.windows.win_shell: |
