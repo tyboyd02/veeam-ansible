@@ -1,3 +1,3 @@
 collections:
   - name: veeamhub.veeam
-    source: https://github.com/tyboyd02/veeam-ansible
+    src: https://github.com/tyboyd02/veeam-ansible
